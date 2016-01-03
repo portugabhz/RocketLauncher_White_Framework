@@ -9,6 +9,7 @@ using TestStack.White.Factory;
 using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.TabItems;
 using TestStack.White.UIItems.WindowItems;
+using TestStack.White.Utility;
 
 
 public enum MainTabs
@@ -30,30 +31,35 @@ namespace ScreenObjects
         Window root;
         public MainWindow(TestStack.White.Application app)
         {
-            root = app
-                .GetWindow(SearchCriteria.ByAutomationId("RocketLauncherUI"), InitializeOption.WithCache);
+            Retry.For(() => root = app.GetWindow(SearchCriteria.ByAutomationId("RocketLauncherUI"), InitializeOption.WithCache), TimeSpan.FromSeconds(5));
         }
 
 
-        public void SetMainTab(MainTabs tab)
+        public MainWindow SetMainTab(MainTabs tab)
         {
             string sTabAID = null;
             switch(tab)
             {
                 case MainTabs.Emulators:
+                    sTabAID = "tabEmulators";
                     break;
                 case MainTabs.Games:
                     sTabAID = "tabGames";
                     break;
                 case MainTabs.GeneralSettings:
+                    sTabAID = "tabGeneralSettings";
                     break;
                 case MainTabs.Keymapper:
+                    sTabAID = "tabKeymapper";
                     break;
                 case MainTabs.LogViewer:
+                    sTabAID = "tabLogViewer";
                     break;
                 case MainTabs.Modules:
+                    sTabAID = "tabModules";
                     break;
                 case MainTabs.Pause:
+                    sTabAID = "tabPause";
                     break;
                 case MainTabs.RocketLauncherUI:
                     sTabAID = "tabRLUI";
@@ -65,7 +71,12 @@ namespace ScreenObjects
             }
 
             root.Get<Tab>(SearchCriteria.ByAutomationId("tabMain")).Pages.Where(x => x.AutomationElement.Current.AutomationId.Equals(sTabAID)).Single().Click();
+
+            return this;
         }
+
+
+
 
     }
 }

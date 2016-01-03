@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestStack.White;
 using ScreenObjects;
+using TestStack.White.Utility;
 
 namespace Tests
 {
@@ -15,8 +16,17 @@ namespace Tests
 
             Application app = Application.Launch(path + @"\RocketLauncherUI.exe");
 
-            System.Threading.Thread.Sleep(5000);
-            new MainWindow(app).SetMainTab(MainTabs.Games);
+            new MainWindow(app).SetMainTab(MainTabs.Keymapper)
+                .SetMainTab(MainTabs.LogViewer)
+                .SetMainTab(MainTabs.RocketLauncherUI)
+                .SetMainTab(MainTabs.GeneralSettings)
+                .SetMainTab(MainTabs.Settings)
+                .SetMainTab(MainTabs.Emulators)
+                .SetMainTab(MainTabs.Modules)
+                .SetMainTab(MainTabs.Games)
+                .SetMainTab(MainTabs.Pause);
+
+
 
         }
     }
